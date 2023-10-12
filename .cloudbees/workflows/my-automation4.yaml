@@ -1,0 +1,46 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: My automation
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    steps:
+      - name: Checkout
+        uses: cloudbees-io/checkout@v1.0.2
+      - name: Running Snyk SCA scan
+        uses: cloudbees-io/snyk-sca-scan-dependency@v1
+        with:
+          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+          token: ${{ secrets.SNYK_SAAS_TOKEN }}
+          language: "LANGUAGE_JAVA"
+          
+      - name: Running Snyk SAST Scan
+        uses: cloudbees-io/snyk-sast-scan-code@v1
+        with:
+          orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
+          token: ${{ secrets.SNYK_SAAS_TOKEN }}
+          language: "LANGUAGE_JAVA"
+          
+      - name: Deploy Using CBCI
+        uses: cloudbees-io/cbci-run-job
+        kind: build
+        with:
+          url: https://releaseiq.ironman.releaseiq.io/
+          username: ${{ secrets.CBCI_IRONMAN_USERNAME }}
+          password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
+          job-name: demo_ build_component4
+          parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
+
+      - name: Deploy Using CBCI
+        uses: cloudbees-io/cbci-run-job
+        kind: deploy
+        with:
+          url: https://releaseiq.ironman.releaseiq.io/
+          username: ${{ secrets.CBCI_IRONMAN_USERNAME }}
+          password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
+          job-name: demo_deploy_component4
+          parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
