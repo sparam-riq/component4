@@ -1,10 +1,10 @@
 replicaCount: 1
 image:
-  repository: demo_component1
+  repository: demo_component4
   tag: latest
   pullPolicy: Always
 
 service:
-  name: demo-component1
+  name: demo-component4
   type: ClusterIP
   port: 8080
