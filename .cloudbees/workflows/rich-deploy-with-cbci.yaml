@@ -11,21 +11,18 @@ jobs:
     steps:
       - uses: cloudbees-io/checkout@v1.0.2
         name: Checkout
-        
       - uses: cloudbees-io/snyk-sca-scan-dependency@v1
-        name: Snyk SCA scan
+        name: Snyk SCA Scan
         with:
           orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
           language: LANGUAGE_JAVA
-
       - uses: cloudbees-io/snyk-sast-scan-code@v1
         name: Snyk SAST Scan
         with:
           orgname: ${{ vars.SNYK_SAAS_ORG_NAME }}
           token: ${{ secrets.SNYK_SAAS_TOKEN }}
           language: LANGUAGE_JAVA
-
       - uses: cloudbees-io/cbci-run-job
         name: CBCI Deploy
         kind: deploy
