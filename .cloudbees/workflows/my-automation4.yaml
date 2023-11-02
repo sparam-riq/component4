@@ -32,7 +32,7 @@ jobs:
         with:
           url: https://releaseiq.ironman.releaseiq.io/
           username: ${{ secrets.CBCI_IRONMAN_USERNAME }}
-          password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
+          token: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
           job-name: demo_build_component4
           parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
 
@@ -42,7 +42,7 @@ jobs:
         with:
           url: https://releaseiq.ironman.releaseiq.io/
           username: ${{ secrets.CBCI_IRONMAN_USERNAME }}
-          password: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
+          token: ${{ secrets.CBCI_IRONMAN_PASSWORD }}
           job-name: demo_deploy_component4
           parameters: '{"TAG_NAME":"${{ cloudbees.scm.sha }}"}'
 
