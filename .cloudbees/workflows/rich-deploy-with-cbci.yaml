@@ -9,7 +9,7 @@ jobs:
   build-deploy:
     environment: stage
     steps:
-      - uses: cloudbees-io/checkout@v1.0.2
+      - uses: cloudbees-io/checkout@v1
         name: Checkout
       - uses: cloudbees-io/snyk-sca-scan-dependency@v1
         name: Snyk SCA scan
